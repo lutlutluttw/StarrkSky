@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera and Microphone Test</title>
+    <style>
+        /* 設定一些基本樣式來顯示訊息和影片 */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+        #video {
+            border: 2px solid black;
+            margin-top: 20px;
+            width: 320px;
+            height: 240px;
+        }
+        #status {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Camera and Microphone Test</h1>
+<video id="video" autoplay></video>
+<p id="status">Waiting for permission...</p>
+
+<script>
+    // 這是用來啟動相機和麥克風的代碼
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+        .then(function(stream) {
+            // 如果相機和麥克風成功啟動
+            console.log("Camera and microphone are working.");
+
+            // 將視頻流顯示在頁面上的 <video> 元素中
+            var video = document.getElementById('video');
+            video.srcObject = stream;
+
+            // 更新顯示狀態
+            document.getElementById('status').textContent = 'Camera and microphone are working!';
+        })
+        .catch(function(error) {
+            // 如果出現錯誤，可能是用戶拒絕或設備故障
+            console.error("Error accessing camera and/or microphone: ", error);
+
+            // 顯示錯誤訊息
+            document.getElementById('status').textContent = 'Error accessing camera and/or microphone: ' + error.message;
+        });
+</script>
+
+</body>
+</html>
